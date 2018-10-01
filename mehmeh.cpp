@@ -33,7 +33,8 @@ int main()
 	return 0;
 }
 
-//random number for what???
+//random number for what??? // please check the restrictions, if we use an array of 52 element to store those cards, then the random number will be index of array
+// The GetRandom funtion should return an integer
 void GetRandom(int min, int max)
 {
 	for (int h = 0; h < 52; h++)
@@ -42,7 +43,7 @@ void GetRandom(int min, int max)
 	}
 }
 
-//deal cards to players
+//deal cards to players // better to use an array of 52 elements to store cards
 string DealCard(string cardPlayer)
 {
 	//pairing values and suits
