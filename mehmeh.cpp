@@ -1,54 +1,76 @@
 #include <iostream>
 #include <cstdlib>
-#include <iomanip> 
+#include <iomanip>
 #include <cmath>
 #include <ctime>
 #include <string>
+#include <vector>
 using namespace std;
 
-int GetRandom(int min, int max)
-{
-	int randomNum = min - rand() % (max - min + 1);
-	return randomNum;
-
-}
-
-int DealCard(int cardPlayer)
-{
-	const char VALUES[13] = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K' };
-	const char SUITS[4] = { 'H', 'D', 'S', 'C' };
-	int cardV = rand() % 13;
-	int cardS = rand() % 4;
-	cardV[VALUES];
-	cardS[SUITS]; 
-	int CardDeck[52];
-    //How do I assign two cards to player?
-
-
-	
-	return; 
-}
-
-/*int ScoreHand(int totalscore)
-{
-	cout << "What";
-	return;
-}*/
+//declare functions
+void GetRandom(int min = 0, int max = 52);
+string DealCard(string cardPlayer);
+int ScoreHand(int totalscore);
 
 int main()
 {
-	srand(time(nullptr));
+	srand(time(0));
 	int playerNum;
 	cout << "How many players? ";
 	cin >> playerNum;
 
+	string PlayerCard;
 	int i;
 	for (i = 1; i <= playerNum; i++)
 	{
-		cout << "Player " << i << " has cards: " << DealCard(playerNum);
+		cout << "Player " << i << " has cards: " << DealCard(PlayerCard) << " " << DealCard(PlayerCard);
+		cout << setw(20) << "" << left << "(" << ScoreHand(0) << ")" << endl;
 	}
+	
 	int close;
 	cin >> close;
 
 	return 0;
+}
+
+//random number for what???
+void GetRandom(int min, int max)
+{
+	for (int h = 0; h < 52; h++)
+	{
+		int hand = rand() % (max - h + 1);
+	}
+}
+
+//deal cards to players
+string DealCard(string cardPlayer)
+{
+	//pairing values and suits
+	string cardFace;
+	string VALUES[13] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+	char SUITS[4] = { 'H', 'D', 'S', 'C' };
+	int cardV = rand() % 13;
+	int cardS = rand() % 4;
+	cardFace += cardV[VALUES];
+	cardFace += cardS[SUITS];
+	string cardDeck[52];
+	//how do I assign them to players and make sure there is not repetition???
+	return cardFace;
+
+} 
+
+//total scores
+int ScoreHand(int totalscore)
+{
+	int val = 0;
+	switch (val)
+	{
+	case 'A':
+		totalscore += 1;
+		break;
+	case'2':
+		totalscore += 2;
+		break;
+	}
+	return totalscore;
 }
