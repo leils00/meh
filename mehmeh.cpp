@@ -8,7 +8,7 @@
 using namespace std;
 
 //declare functions
-void GetRandom(int min = 0, int max = 52);
+int GetRandom(int min = 0, int max = 52);
 string DealCard(string cardPlayer);
 int ScoreHand(int totalscore);
 
@@ -33,12 +33,13 @@ int main()
 	return 0;
 }
 
-//random number for what???
-void GetRandom(int min, int max)
+
+int GetRandom(int min, int max)
 {
 	for (int h = 0; h < 52; h++)
 	{
 		int hand = rand() % (max - h + 1);
+		return hand;
 	}
 }
 
@@ -56,7 +57,28 @@ string DealCard(string cardPlayer)
 	string cardDeck[52];
 	//how do I assign them to players and make sure there is not repetition???
 	return cardFace;
+	for (int c = 0; c < 52; c++)
+	{
+		if (GetRandom() <= 13)
+		{
+			return cardDeck[c];
+		}
 
+		if (GetRandom() >= 14 && GetRandom() <= 26)
+		{
+			return cardDeck[c];
+		}
+
+		if (GetRandom() >= 27 && GetRandom() <= 39)
+		{
+			return cardDeck[c];
+		}
+
+		if (GetRandom() >= 40 && GetRandom() <= 52)
+		{
+			return cardDeck[c];
+		}
+	}
 } 
 
 //total scores
