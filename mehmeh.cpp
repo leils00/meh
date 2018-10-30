@@ -24,6 +24,7 @@ int main() {
 	//call two cards and total scores 
 	string PlayerCard;
 	int i;
+	//should I change the cout into a function?
 	for (i = 1; i <= playerNum; i++) {
 		cout << "Dealer " << " has cards: ";
 		cout << left << DealCard(cardDeck, i) << " " << setw(20) << DealCard(cardDeck, i);
@@ -98,7 +99,10 @@ int ScoreHand(const int cardDeck[], int player) {
 	return total;
 }
 
+//how do I score the dealer and player by calling the card array?
 /*int ScoreDealer(const int cardDeck[], int dealer){
 	int dealerHand = ScoreHand();
 
 }*/
+
+
