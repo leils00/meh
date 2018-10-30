@@ -4,27 +4,36 @@
 #include <cmath>
 #include <ctime>
 #include <string>
-#include <vector>
 using namespace std;
-//trying new things so there are a lot of things that probably don't work
+
 //declare functions
-int GetRandom(int min = 0, int max = 52);
-string DealCard();
-//int ScoreHand();
+int GetRandom(int min, int max);
+string DealCard(int cardDeck[], int player);
+int ScoreHand(const int cardDeck[], int player);
+int ScoreDealer(const int cardDeck[], int dealer);
 
-int main(){
-	srand(time(0));
-	int playerNum;
-	cout << "How many players? ";
-	cin >> playerNum;
+//main function
+int main() {
+	srand(time(0)); //seed 
+	int playerNum = 2;
+	string dealer;
+	string youPlayer;
+	int cardDeck[52] = { 0 };
+	string decision;
 
+	//call two cards and total scores 
 	string PlayerCard;
 	int i;
-	for (i = 1; i <= playerNum; i++){
-		cout << "Player " << i << " has cards: " << DealCard() << " " << DealCard();
-		cout << setw(20) << "" << left << "(" << /*ScoreHand() <<*/ ")" << endl;
+	for (i = 1; i <= playerNum; i++) {
+		cout << "Dealer " << " has cards: ";
+		cout << left << DealCard(cardDeck, i) << " " << setw(20) << DealCard(cardDeck, i);
+		cout << "(" << ScoreHand(cardDeck, i) << ")" << endl;
+		cout << "You have cards: ";
+		cout << left << DealCard(cardDeck, i) << " " << setw(20) << DealCard(cardDeck, i);
+		cout << "(" << ScoreHand(cardDeck, i) << ")" << endl;
+		
 	}
-	
+
 	//visual studio only
 	int close;
 	cin >> close;
@@ -32,90 +41,64 @@ int main(){
 	return 0;
 }
 
+//get a random value between min and max
+int GetRandom(int min, int max) {
+	int random = min + rand() % (max - min + 1);
+	return random;
+}
 
-string DeckOfCards() {
-	string cardDeck[52];
+
+//deal cards to players
+string DealCard(int cardDeck[], int player) {
+	//pairing values and suits
 	string cardFace;
 	string VALUES[13] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 	char SUITS[4] = { 'H', 'D', 'S', 'C' };
-	int cardV = rand() % 13;
-	int cardS = rand() % 4;
-	cardFace += cardV[VALUES];
-	cardFace += cardS[SUITS];
+	//call random value for card value and suit from GetRandom() 
+	int randomValue = GetRandom(0, 12);
+	int randomSuit = GetRandom(0, 3);
+	int cardsIndex = (randomSuit * 13) + randomValue;
+
+	//checking undealt cards
+	while (cardDeck[cardsIndex] != 0) {
+		randomValue = GetRandom(0, 12);
+		randomSuit = GetRandom(0, 3);
+		cardsIndex = (randomSuit * 13) + randomValue;
+	}
+
+	//assign card index from array to player
+	cardDeck[cardsIndex] = player;
+
+	//values and suits added to card
+	cardFace += VALUES[randomValue];
+	cardFace += SUITS[randomSuit];
+
 	return cardFace;
 }
 
-int GetRandom(int min, int max){
-	
-	int cardDeck[52];
-	for (int d = 0; d < 52; d++) {
-		cardDeck[d] = max - rand() % (max - min + 1);
-		return cardDeck[d];
-	}	   
+//total scores
+int ScoreHand(const int cardDeck[], int player) {
+	int total = 0;
+
+	for (int j = 0; j < 52; j++) {
+		if (cardDeck[j] == player) {
+			//Ace = 0 % 13 + 1; Jack = 10 % 13 + 1, etc.
+			int score = (j % 13) + 1;
+
+			//any score greater than 10 is equal to 10
+			//for Jack, Queen, King
+			if (score > 10) {
+				score = 10;
+			}
+
+			total += score;
+		}
+	}
+
+	return total;
 }
 
-/*void shuffleDeck(int cardDeck[52], int n) {
-	for (int j = 0; j < n; j++) {
-		int shuffle = j + (rand() % (52 - j));
-		cardDeck[j] = cardDeck[n]; 
-	}
-}*/
-//deal cards to players
-string DealCard(){
-	//pairing values and suits
-	const int NumOfCards = 2;
-	string cardFace = DeckOfCards();
-	int cardDeck[52];
-	for (int j = 0; j < 52; cardDeck[j++]) {
-		cardDeck[j] = rand() % (52 - j) + j;
-		return cardDeck[j];
-	}
-	
-	
-} 
+/*int ScoreDealer(const int cardDeck[], int dealer){
+	int dealerHand = ScoreHand();
 
-//total scores
-/*int ScoreHand() {
-	int val = 0;
-	DealCard();
-	int totals = 0;
-	for (int v = 0; v < 52; v++) {
-		switch (cardDeck[v]) {
-		case 'A':
-			totals += 1;
-			break;
-		case '2':
-			totals += 2;
-			break;
-		case'3':
-			totals += 3;
-			break;
-		case '4':
-			totals += 4;
-			break;
-		case '5':
-			totals += 5;
-			break;
-		case '6':
-			totals += 6;
-			break;
-		case '7':
-			totals += 7;
-			break;
-		case '8':
-			totals += 8;
-			break;
-		case '9':
-			totals += 9;
-			break;
-		case '10':
-		case'J':
-		case 'Q':
-		case'K':
-			totals += 10;
-			break;
-		}
-		return totals;
-
-	}
 }*/
